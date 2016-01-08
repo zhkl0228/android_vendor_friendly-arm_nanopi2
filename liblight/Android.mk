@@ -1,4 +1,4 @@
-# Copyright (C) 2010 The Android Open Source Project
+# Copyright (C) 2008 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,25 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-VENDOR_PATH := vendor/friendly-arm/nanopi2
+LOCAL_PATH:= $(call my-dir)
+# HAL module implemenation stored in
+# hw/<COPYPIX_HARDWARE_MODULE_ID>.<ro.board.platform>.so
+include $(CLEAR_VARS)
 
-# ogl
-PRODUCT_COPY_FILES += \
-	$(VENDOR_PATH)/prebuilt/vr.ko:system/lib/modules/vr.ko
+LOCAL_MODULE_PATH := $(TARGET_OUT_SHARED_LIBRARIES)/hw
+LOCAL_SHARED_LIBRARIES := liblog
 
-# coda
-PRODUCT_COPY_FILES += \
-	$(VENDOR_PATH)/prebuilt/nx_vpu.ko:system/lib/modules/nx_vpu.ko
+LOCAL_SRC_FILES := lights.c
 
-# ap621x
-PRODUCT_COPY_FILES += \
-	$(VENDOR_PATH)/prebuilt/bcmdhd.ko:system/lib/modules/bcmdhd.ko
+LOCAL_MODULE := lights.$(TARGET_DEVICE)
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_OWNER := friendlyarm
 
-# backlight
-PRODUCT_PACKAGES += \
-	lights.nanopi2
-
-# Prebuilts
-#PRODUCT_PACKAGES += \
-	prebuilt.busybox \
-
+include $(BUILD_SHARED_LIBRARY)
